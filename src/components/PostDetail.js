@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Header } from 'semantic-ui-react';
+import { Container, Header, Image } from 'semantic-ui-react';
 import axios from 'axios';
 import Message from './Message';
 import Loader from './Loader';
@@ -16,7 +16,7 @@ const PostDetail = () => {
         setLoading(true)
         async function fetchPost() {
             try {
-                const res = await axios.get(`http://127.0.0.1:8000/post/${postSlug}`)
+                const res = await axios.get(`http://127.0.0.1:8000/api/posts/${postSlug}`)
                 setPost(res.data)
                 setLoading(false)
             }
@@ -31,11 +31,18 @@ const PostDetail = () => {
     return (
         <div>
             <Container text>
-                <Header>{ post && post.title}</Header>
                 {error && <Message negative message={error}/>}
                 {loading && <Loader />}
                 {post && (
-                    <p>{post.content}</p>                    
+                    <div>
+                        <Image src={post.thumbnail} />
+                        <Header>
+                            {post.title}
+                        </Header>
+                        <Header as='h4'>Author: {post.user.username}</Header>
+                        <Header as='h4'>Last Updated: {`${new Date(post.updated_at).toLocaleDateString()}`}</Header>
+                        <p>{post.content}</p>                                            
+                    </div>
                 )}
             </Container>
         </div>
