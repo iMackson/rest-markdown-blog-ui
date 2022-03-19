@@ -4,6 +4,7 @@ import axios from 'axios'
 
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import { NavLink } from 'react-router-dom';
 
 const PostList = () => {
     const [posts, setPosts] = useState(null);
@@ -38,7 +39,7 @@ const PostList = () => {
                     <Item key={post.id}>
                         <Item.Image size='small' src={post.thumbnail} />
                         <Item.Content>
-                            <Item.Header as='a'>{post.title}</Item.Header>
+                            <Item.Header as='h3'><NavLink to={`/post/${post.slug}`}>{post.title}</NavLink></Item.Header>
                             <Item.Description>{post.content}</Item.Description>
                         </Item.Content>
                     </Item>
